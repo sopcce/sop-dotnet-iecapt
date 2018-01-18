@@ -75,15 +75,27 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Demo.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Js\common.js" />
     <Content Include="Lib\IECapt.exe" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Demo.aspx.cs">
+      <DependentUpon>Demo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Demo.aspx.designer.cs">
+      <DependentUpon>Demo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\IeCaptHelper.cs" />
+    <Compile Include="Helper\IECaptHelper.cs" />
+    <Compile Include="Helper\IECaptStatus.cs" />
+    <Compile Include="Helper\IECaptParameter.cs" />
+    <Compile Include="Helper\ReturnResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
