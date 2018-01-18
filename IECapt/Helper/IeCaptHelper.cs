@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IECapt.Model;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -23,7 +24,7 @@ namespace IECapt.Helper
       }
       url = (url.IndexOf("http://", StringComparison.OrdinalIgnoreCase) > -1 ||
         url.IndexOf("https://", StringComparison.OrdinalIgnoreCase) > -1) ? url : "http://" + url;
-      var path = AppDomain.CurrentDomain.BaseDirectory + "TempFiles/Image";
+      var path = AppDomain.CurrentDomain.BaseDirectory + "TempFiles\\Image";
       if (!Directory.Exists(path))
       {
         Directory.CreateDirectory(path);

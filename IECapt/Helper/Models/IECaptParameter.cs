@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace IECapt.Helper
+namespace IECapt.Model
 {
   #region Open a command prompt and ask for help
   // Open a command prompt and ask for help:

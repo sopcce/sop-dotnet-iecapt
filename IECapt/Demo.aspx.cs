@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IECapt.Helper;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -80,6 +81,22 @@ namespace IECapt
 
     protected void Btn_Screenshot_Click(object sender, EventArgs e)
     {
+      string url = text_url.Text;
+
+      var result = IECaptHelper.Execute(url);
+      Capt_img_1.ImageUrl = result.Data;
+
+
+
+      var result2 = ImageHelper.Execute(url);
+      Capt_img_1.ImageUrl = result2.Data;
+
+
+
+      //Bitmap m_Bitmap = new WebSnapshotsHelper().GetWebSiteThumbnail("http://download.csdn.net/download/CEOCDO/1506080", 800, 1200, 800, 1200); //宽高根据要获取快照的网页决定
+      //var dir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+      //m_Bitmap.Save(dir + "//render_img.bmp", System.Drawing.Imaging.ImageFormat.Bmp);  
+    
 
     }
   }
