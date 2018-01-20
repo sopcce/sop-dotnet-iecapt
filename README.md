@@ -1,6 +1,9 @@
 # IECapt.Net
-C# IECapt生成网页快照,参考：http://iecapt.sourceforge.net/
+C# IECapt生成网页快照
+
+
 原文地址：http://blog.csdn.net/sunbingzibo/article/details/37882355
+
 参考地址：http://blog.csdn.net/banketree/article/details/7963209
 
 
