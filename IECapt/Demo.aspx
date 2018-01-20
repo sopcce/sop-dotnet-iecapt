@@ -48,11 +48,11 @@
         </div>
         <hr />
         <div class="form-group">
-            <asp:HyperLink ID="Capt_img_1" runat="server" Target="_parent">IECapt，方案一</asp:HyperLink>
+            <asp:HyperLink ID="Capt_img_1" runat="server" Target="_parent">IECapt:</asp:HyperLink>
         </div>
         <hr />
         <div class="form-group">
-            <asp:HyperLink ID="Capt_img_2" runat="server" Target="_parent">CutyCapt，方案二</asp:HyperLink>
+            <asp:HyperLink ID="Capt_img_2" runat="server" Target="_parent">CutyCapt:</asp:HyperLink>
         </div>
         <hr />
 

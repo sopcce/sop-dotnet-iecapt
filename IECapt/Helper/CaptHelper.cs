@@ -167,7 +167,7 @@ namespace Capt.Helper
             info.Delay);
           process.StandardInput.WriteLine(value);
           process.StandardInput.WriteLine("exit");
-          process.WaitForExit(120000);  //2分钟失效 
+          process.WaitForExit(info.WaitForExitTime > 0 ? info.WaitForExitTime : 6000);
           output = process.StandardOutput.ReadToEnd();
 
         }

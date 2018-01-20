@@ -17,7 +17,11 @@ namespace Capt.Helper
       Min_width = 800;
       Max_wait = 0;
       Delay = 0;
+      WaitForExitTime = 6000;
     }
+    /// <summary>
+    /// 类型
+    /// </summary>
     public IECaptOrCutyCapt CaptType { get; set; }
     /// <summary>
     /// The URL to capture (http:...|file:...|...)
@@ -43,6 +47,10 @@ namespace Capt.Helper
     /// 等待加载后  
     /// </summary>
     public int Delay { get; set; }
+
+
+
+    public int WaitForExitTime { get; set; }
   }
   /// <summary>
   /// 

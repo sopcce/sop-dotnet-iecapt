@@ -25,10 +25,14 @@ namespace IECapt
     protected void Btn_Screenshot_Click(object sender, EventArgs e)
     {
       string url = text_url.Text;
-       
-      Capt_img_1.ImageUrl = CaptHelper.Execute(url, IECaptOrCutyCapt.IECapt).Data;
 
-      Capt_img_2.ImageUrl = CaptHelper.Execute(url, IECaptOrCutyCapt.CutyCapt).Data;
+      var result_1 = CaptHelper.Execute(url, IECaptOrCutyCapt.IECapt);
+      Capt_img_1.ImageUrl = result_1.Data;
+      Capt_img_1.Text = Capt_img_1.Text + "|" + result_1.Data;
+
+      var result_2 = CaptHelper.Execute(url, IECaptOrCutyCapt.CutyCapt);
+      Capt_img_2.ImageUrl = result_2.Data;
+      Capt_img_2.Text = Capt_img_2.Text + "|" + result_2.Data;
     }
   }
 }
