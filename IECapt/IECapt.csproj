@@ -82,14 +82,37 @@
     <Content Include="Global.asax" />
     <Content Include="Js\common.js" />
     <Content Include="Js\jquery.min.js" />
-    <Content Include="Lib\IECapt.exe" />
+    <Content Include="Lib\CutyCapt\CutyCapt.exe" />
+    <Content Include="Lib\CutyCapt\icudt51.dll" />
+    <Content Include="Lib\CutyCapt\icuin51.dll" />
+    <Content Include="Lib\CutyCapt\icuuc51.dll" />
+    <Content Include="Lib\CutyCapt\libeay32.dll" />
+    <Content Include="Lib\CutyCapt\libgcc_s_dw2-1.dll" />
+    <Content Include="Lib\CutyCapt\libstdc++-6.dll" />
+    <Content Include="Lib\CutyCapt\libwinpthread-1.dll" />
+    <Content Include="Lib\CutyCapt\platforms\qwindows.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Core.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Gui.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Multimedia.dll" />
+    <Content Include="Lib\CutyCapt\Qt5MultimediaWidgets.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Network.dll" />
+    <Content Include="Lib\CutyCapt\Qt5OpenGL.dll" />
+    <Content Include="Lib\CutyCapt\Qt5PrintSupport.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Qml.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Quick.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Sensors.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Sql.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Svg.dll" />
+    <Content Include="Lib\CutyCapt\Qt5V8.dll" />
+    <Content Include="Lib\CutyCapt\Qt5WebKit.dll" />
+    <Content Include="Lib\CutyCapt\Qt5WebKitWidgets.dll" />
+    <Content Include="Lib\CutyCapt\Qt5Widgets.dll" />
+    <Content Include="Lib\CutyCapt\ssleay32.dll" />
+    <Content Include="Lib\IECapt\IECapt.exe" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Helper\SnapHelper.cs" />
-    <Compile Include="Helper\Models\ImageType.cs" />
-    <Compile Include="Helper\ImageHelper.cs" />
-    <Content Include="Helper\WebSnapshotsHelper.cs" />
+    <Compile Include="App_Code\Class1.cs" />
     <Compile Include="Demo.aspx.cs">
       <DependentUpon>Demo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -100,14 +123,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helper\IECaptHelper.cs" />
-    <Compile Include="Helper\Models\IECaptStatus.cs" />
-    <Compile Include="Helper\Models\IECaptParameter.cs" />
-    <Compile Include="Helper\Models\ReturnResult.cs" />
+    <Compile Include="Helper\CaptHelper.cs" />
+    <Compile Include="Helper\CaptInfo.cs" />
+    <Compile Include="Helper\ReturnResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>

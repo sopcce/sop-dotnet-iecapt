@@ -48,17 +48,14 @@
         </div>
         <hr />
         <div class="form-group">
-            <asp:HyperLink ID="Capt_img_1" runat="server" Target="_parent">快照地址，方案一</asp:HyperLink>
+            <asp:HyperLink ID="Capt_img_1" runat="server" Target="_parent">IECapt，方案一</asp:HyperLink>
         </div>
         <hr />
-          <div class="form-group">
-            <asp:HyperLink ID="Capt_img_2" runat="server" Target="_parent">快照地址，方案二</asp:HyperLink>
+        <div class="form-group">
+            <asp:HyperLink ID="Capt_img_2" runat="server" Target="_parent">CutyCapt，方案二</asp:HyperLink>
         </div>
         <hr />
-          <div class="form-group">
-            <asp:HyperLink ID="Capt_img_3" runat="server" Target="_parent">快照地址，方案三</asp:HyperLink>
-        </div>
-        <hr />
+
         <asp:Button ID="Btn_Screenshot" runat="server" Text="网页快照" class="btn btn-default" OnClick="Btn_Screenshot_Click" OnClientClick="return check();" />
     </form>
 
