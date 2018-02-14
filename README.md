@@ -1,4 +1,4 @@
-# IECapt.Net
+# IECapt.Net CutCapt.net
 C# IECapt生成网页快照
 
 
