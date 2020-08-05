@@ -2,9 +2,9 @@
 C# IECapt生成网页快照
 
 
-原文地址：http://blog.csdn.net/sunbingzibo/article/details/37882355
+原文地址：https://www.cnblogs.com/sopcce/p/13328263.html
 
-参考地址：http://blog.csdn.net/banketree/article/details/7963209
+ 
 
 
 
