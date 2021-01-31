@@ -71,147 +71,147 @@ using System.Web;
 namespace Capt.Helper
 {
 
-  public class CaptHelper
-  {
-    /// <summary>
-    /// 执行截图操作
-    /// </summary>
-    /// <param name="url">网页链接，example:"https://www.baidu.com/"</param> 
-    /// <returns></returns>
-    public static ReturnResult<string> Execute(string url, IECaptOrCutyCapt type = IECaptOrCutyCapt.IECapt)
+    public class CaptHelper
     {
-      if (string.IsNullOrEmpty(url))
-      {
-        return new ReturnResult<string>() { Msg = "url 为空" };
-      }
-      url = (url.IndexOf("http://", StringComparison.OrdinalIgnoreCase) > -1 ||
-        url.IndexOf("https://", StringComparison.OrdinalIgnoreCase) > -1) ? url : "http://" + url;
-      var path = AppDomain.CurrentDomain.BaseDirectory + "TempFiles\\Image";
-      if (!Directory.Exists(path))
-      {
-        Directory.CreateDirectory(path);
-      }
-      string fileName = Guid.NewGuid().ToString("N") + ".png";
-      string completePath = Path.Combine(path, fileName);
-      var data = Execute(new CaptInfo() { Url = url, Out = completePath, CaptType = type });
-      data.Data = completePath;
-      return data;
+        /// <summary>
+        /// 执行截图操作
+        /// </summary>
+        /// <param name="url">网页链接，example:"https://www.baidu.com/"</param> 
+        /// <returns></returns>
+        public static ReturnResult<string> Execute(string url, IECaptOrCutyCapt type = IECaptOrCutyCapt.IECapt)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                return new ReturnResult<string>() { Msg = "url 为空" };
+            }
+            url = (url.IndexOf("http://", StringComparison.OrdinalIgnoreCase) > -1 ||
+              url.IndexOf("https://", StringComparison.OrdinalIgnoreCase) > -1) ? url : "http://" + url;
+            var path = AppDomain.CurrentDomain.BaseDirectory + "TempFiles\\Image";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            string fileName = Guid.NewGuid().ToString("N") + ".png";
+            string completePath = Path.Combine(path, fileName);
+            var data = Execute(new CaptInfo() { Url = url, Out = completePath, CaptType = type });
+            data.Data = completePath;
+            return data;
+        }
+        /// <summary>
+        /// 执行截图操作
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="path">物理路径，</param>
+        /// <returns></returns>
+        public static ReturnResult<string> Execute(string url, string path,
+          IECaptOrCutyCapt type = IECaptOrCutyCapt.IECapt)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                return new ReturnResult<string>() { Msg = "url 为空" };
+            }
+            url = (url.IndexOf("http://", StringComparison.OrdinalIgnoreCase) > -1 ||
+              url.IndexOf("https://", StringComparison.OrdinalIgnoreCase) > -1) ? url : "http://" + url;
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            string fileName = Guid.NewGuid().ToString("N") + ".png";
+            string completePath = Path.Combine(path, fileName);
+            var data = Execute(new CaptInfo() { Url = url, Out = completePath, CaptType = type });
+            data.Data = completePath;
+            return data;
+        }
+        /// <summary>
+        /// 执行输出快照
+        /// </summary>
+        /// <param name="info">CaptInfo</param>
+        /// <returns></returns>
+        public static ReturnResult<string> Execute(CaptInfo info)
+        {
+            string output = string.Empty;
+            Stopwatch sw = Stopwatch.StartNew();
+            string root = string.Empty;
+            if (info.CaptType == IECaptOrCutyCapt.IECapt)
+            {
+                root = AppDomain.CurrentDomain.BaseDirectory + @"Lib\\IECapt";
+                if (!File.Exists(root + "\\IECapt.exe"))
+                    throw new FileNotFoundException("IECapt.exe file can't be found .");
+            }
+            else
+            {
+                root = AppDomain.CurrentDomain.BaseDirectory + @"Lib\\CutyCapt";
+                if (!File.Exists(root + "\\CutyCapt.exe"))
+                    throw new FileNotFoundException("IECapt.exe file can't be found .");
+            }
+
+            using (var process = new Process())
+            {
+                try
+                {
+                    process.StartInfo.WorkingDirectory = root;
+                    process.StartInfo.FileName = "cmd.exe";
+                    process.StartInfo.UseShellExecute = false;
+                    process.StartInfo.RedirectStandardInput = true;
+                    process.StartInfo.RedirectStandardOutput = true;
+                    process.StartInfo.CreateNoWindow = true;
+
+                    //process.StartInfo.CreateNoWindow = false;
+                    process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    process.Start();
+                    string value = string.Format(@"{0} --url={1} --out={2} --min-width={3} --max-wait={4} --delay={5} --silent",
+                      info.CaptType == IECaptOrCutyCapt.IECapt ? "iecapt" : "cutycapt", //输出方式
+                      info.Url,  //输入路径网站
+                      info.Out,   //输出
+                      info.Min_width,
+                      info.Max_wait,
+                      info.Delay);
+                    process.StandardInput.WriteLine(value);
+                    process.StandardInput.WriteLine("exit");
+                    process.WaitForExit(info.WaitForExitTime > 0 ? info.WaitForExitTime : 6000);
+                    output = process.StandardOutput.ReadToEnd();
+
+                }
+                catch (Exception ex)
+                {
+                    return new ReturnResult<string>()
+                    {
+                        Status = CaptStatus.ErrorException,
+                        Msg = "快照失败:" + ex.Message
+                    };
+                }
+                finally
+                {
+                    sw.Stop();
+                    if (!process.HasExited)
+                    {
+                        process.Kill();
+                    }
+                    process.Close();
+                    process.Dispose();
+
+
+                }
+                if (System.IO.File.Exists(info.Out))
+                {
+                    return new ReturnResult<string>()
+                    {
+                        Status = CaptStatus.Success,
+                        QTime = sw.ElapsedMilliseconds,
+                        Msg = "快照生产成功：" + output
+                    };
+                }
+                else
+                {
+                    return new ReturnResult<string>()
+                    {
+                        Status = CaptStatus.ErrorNotOutFile,
+                        Msg = "快照失败,文件不存在"
+                    };
+                }
+
+
+            }
+        }
+
     }
-    /// <summary>
-    /// 执行截图操作
-    /// </summary>
-    /// <param name="url"></param>
-    /// <param name="path">物理路径，</param>
-    /// <returns></returns>
-    public static ReturnResult<string> Execute(string url, string path,
-      IECaptOrCutyCapt type = IECaptOrCutyCapt.IECapt)
-    {
-      if (string.IsNullOrEmpty(url))
-      {
-        return new ReturnResult<string>() { Msg = "url 为空" };
-      }
-      url = (url.IndexOf("http://", StringComparison.OrdinalIgnoreCase) > -1 ||
-        url.IndexOf("https://", StringComparison.OrdinalIgnoreCase) > -1) ? url : "http://" + url;
-
-      if (!Directory.Exists(path))
-        Directory.CreateDirectory(path);
-      string fileName = Guid.NewGuid().ToString("N") + ".png";
-      string completePath = Path.Combine(path, fileName);
-      var data = Execute(new CaptInfo() { Url = url, Out = completePath, CaptType = type });
-      data.Data = completePath;
-      return data;
-    }
-    /// <summary>
-    /// 执行输出快照
-    /// </summary>
-    /// <param name="info">CaptInfo</param>
-    /// <returns></returns>
-    public static ReturnResult<string> Execute(CaptInfo info)
-    {
-      string output = string.Empty;
-      Stopwatch sw = Stopwatch.StartNew();
-      string root = string.Empty;
-      if (info.CaptType == IECaptOrCutyCapt.IECapt)
-      {
-        root = AppDomain.CurrentDomain.BaseDirectory + @"Lib\\IECapt";
-        if (!File.Exists(root + "\\IECapt.exe"))
-          throw new FileNotFoundException("IECapt.exe file can't be found .");
-      }
-      else
-      {
-        root = AppDomain.CurrentDomain.BaseDirectory + @"Lib\\CutyCapt";
-        if (!File.Exists(root + "\\CutyCapt.exe"))
-          throw new FileNotFoundException("IECapt.exe file can't be found .");
-      }
-
-      using (var process = new Process())
-      {
-        try
-        {
-          process.StartInfo.WorkingDirectory = root;
-          process.StartInfo.FileName = "cmd.exe";
-          process.StartInfo.UseShellExecute = false;
-          process.StartInfo.RedirectStandardInput = true;
-          process.StartInfo.RedirectStandardOutput = true;
-          process.StartInfo.CreateNoWindow = true;
-
-          //process.StartInfo.CreateNoWindow = false;
-          process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-          process.Start();
-          string value = string.Format(@"{0} --url={1} --out={2} --min-width={3} --max-wait={4} --delay={5} --silent",
-            info.CaptType == IECaptOrCutyCapt.IECapt ? "iecapt" : "cutycapt", //输出方式
-            info.Url,  //输入路径网站
-            info.Out,   //输出
-            info.Min_width,
-            info.Max_wait,
-            info.Delay);
-          process.StandardInput.WriteLine(value);
-          process.StandardInput.WriteLine("exit");
-          process.WaitForExit(info.WaitForExitTime > 0 ? info.WaitForExitTime : 6000);
-          output = process.StandardOutput.ReadToEnd();
-
-        }
-        catch (Exception ex)
-        {
-          return new ReturnResult<string>()
-          {
-            Status = CaptStatus.ErrorException,
-            Msg = "快照失败:" + ex.Message
-          };
-        }
-        finally
-        {
-          sw.Stop();
-          if (!process.HasExited)
-          {
-            process.Kill();
-          }
-          process.Close();
-          process.Dispose();
-
-
-        }
-        if (System.IO.File.Exists(info.Out))
-        {
-          return new ReturnResult<string>()
-          {
-            Status = CaptStatus.Success,
-            QTime = sw.ElapsedMilliseconds,
-            Msg = "快照生产成功：" + output
-          };
-        }
-        else
-        {
-          return new ReturnResult<string>()
-          {
-            Status = CaptStatus.ErrorNotOutFile,
-            Msg = "快照失败,文件不存在"
-          };
-        }
-
-
-      }
-    }
-
-  }
 }
